@@ -101,6 +101,7 @@ ol.steps{margin:4px 0 0 18px;color:var(--muto);font-size:13.5px;line-height:1.6}
 .photo .ph{width:64px;height:64px;border-radius:10px;background:var(--ghiaccio-2);display:grid;place-content:center;color:var(--argento)}
 .photo b{font-size:14.5px;color:var(--abisso)}
 .photo small{display:block;color:var(--muto);font-size:12.5px;margin-top:2px}
+.flyer{display:block;width:100%;border-radius:14px;margin-bottom:14px;border:1px solid var(--ghiaccio)}
 .preview{white-space:pre-wrap;background:#e7f7ec;border-radius:16px 16px 16px 4px;padding:14px;font-size:14.5px;line-height:1.5;color:#173b2a;margin:6px 0 14px}
 
 /* stats */
@@ -193,21 +194,8 @@ ol.steps{margin:4px 0 0 18px;color:var(--muto);font-size:13.5px;line-height:1.6}
 
     <!-- OFFERTE -->
     <section id="v-offerte" class="hidden">
-      <h2>Nuova offerta</h2>
-      <p class="sub">Scrivi l'offerta, aggiungi la foto del volantino e mandala alla lista "Clienti Maro Gel".</p>
-      <label class="f"><span>Titolo (resta nello storico)</span><input id="oTit" placeholder="Es. Super Offerte di novembre"></label>
-      <label class="f"><span>Messaggio</span><textarea id="oTxt"></textarea></label>
-      <label class="f"><span>Valida fino al</span><input id="oScad" type="date"></label>
-      <label class="photo" for="oImg"><span class="ph" id="oPh"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="m21 17-5-5-8 7"/></svg></span>
-        <span><b id="oImgName">Aggiungi la foto del volantino</b><small>Facoltativa, dalla galleria</small></span></label>
-      <input id="oImg" type="file" accept="image/*" class="hidden">
-      <p class="sub" style="margin:16px 0 4px">Anteprima</p>
-      <div class="preview" id="oPrev"></div>
-      <div class="stack">
-        <button class="btn wa" id="oSend"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.6 2.1 1.1 1 2.1 1.3 2.4 1.4.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 .9c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg>Manda su WhatsApp</button>
-        <button class="btn lite" id="oCopy">Copia solo il testo</button>
-      </div>
-      <h2 style="margin-top:30px">Offerte inviate</h2>
+      <div id="pronte"></div>
+      <h2 style="margin-top:26px">Offerte già mandate</h2>
       <div class="list" id="storico"></div>
     </section>
 
@@ -244,7 +232,7 @@ ol.steps{margin:4px 0 0 18px;color:var(--muto);font-size:13.5px;line-height:1.6}
 <script>
 (function(){
 var SB='https://quodidhaarcozvqsqrnz.supabase.co', KEY='sb_publishable_yeRlSxywXnmQs0GurpJh-A_q2Hhf-y2';
-var PIN=null, CL=[], OFF=[], filtro='tutti', vista='clienti', imgFile=null;
+var PIN=null, CL=[], OFF=[], filtro='tutti', vista='clienti';
 var $=function(id){return document.getElementById(id)};
 function store(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
 function rpc(fn,args){
@@ -364,36 +352,44 @@ function segnaTutti(lista,campo,msg){if(!lista.length)return;
 $('okRub').addEventListener('click',function(){segnaTutti(attivi().filter(function(c){return !c.in_rubrica}),'in_rubrica','Segnati come salvati in rubrica')});
 $('okLista').addEventListener('click',function(){segnaTutti(attivi().filter(function(c){return c.in_rubrica&&!c.in_lista}),'in_lista','Segnati come aggiunti alla lista')});
 
-/* OFFERTE */
-var BASE='❄️ *SUPER OFFERTE MARO GEL* ❄️\n\n• Prodotto 1 – € 0,00\n• Prodotto 2 – € 0,00\n• Prodotto 3 – € 0,00\n\nPrenota rispondendo a questo messaggio e ritira in negozio.\n📍 Via Tommaso Campanella 68, Catanzaro';
-if(!$('oTxt').value)$('oTxt').value=store('mg_bozza')||BASE;
-function testoFinale(){var t=$('oTxt').value.trim(),d=$('oScad').value;
-  if(d){t+='\n\n⏳ Valide fino al '+new Date(d+'T12:00').toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'})}
-  return t+'\n\n_Per non ricevere più le offerte rispondi STOP_'}
-function rOfferte(){$('oPrev').textContent=testoFinale();
-  $('storico').innerHTML=OFF.length?OFF.map(function(o){return '<div class="item"><span class="t"><b>'+esc(o.titolo)+'</b><span>'+new Date(o.inviata_at).toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'})+(o.destinatari!=null?' · '+o.destinatari+' in lista':'')+'</span></span></div>'}).join(''):'<div class="empty">Qui trovi le offerte già mandate.</div>'}
-['oTxt','oScad'].forEach(function(id){$(id).addEventListener('input',function(){store('mg_bozza',$('oTxt').value);$('oPrev').textContent=testoFinale()})});
-$('oImg').addEventListener('change',function(){imgFile=this.files[0]||null;
-  if(imgFile){var u=URL.createObjectURL(imgFile);$('oPh').innerHTML='<img src="'+u+'" alt="">';$('oImgName').textContent=imgFile.name}});
-function salvaStorico(){
-  var n=attivi().filter(function(c){return c.in_lista}).length;
-  return rpc('marogel_offerta_salva',{p_pin:PIN,p_titolo:$('oTit').value||('Offerta del '+new Date().toLocaleDateString('it-IT')),p_testo:testoFinale(),p_scadenza:$('oScad').value||null,p_destinatari:n})
-  .then(function(){return carica()})}
-function chiediConferma(){
-  apri('<h2>Offerta inviata?</h2><p class="sub">Se l\'hai mandata alla lista "Clienti Maro Gel", la salvo nello storico.</p><div class="stack"><button class="btn" id="cSi">Sì, l\'ho mandata</button><button class="btn lite" id="cNo">Non ancora</button></div>');
-  $('cSi').addEventListener('click',function(){salvaStorico().then(function(){chiudi();toast('Salvata nello storico')}).catch(function(e){toast(e.message)})});
+/* OFFERTE: le prepara Teknexa (volantino + testo), Marianna le manda */
+function testoOfferta(o){var t=(o.testo||'').trim();
+  if(o.scadenza&&t.indexOf('Valide fino')<0)t+='\n\n⏳ Valide fino al '+new Date(o.scadenza+'T12:00').toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});
+  if(t.indexOf('STOP')<0)t+='\n\n_Per non ricevere più le offerte rispondi STOP_';return t}
+function rOfferte(){
+  var pr=OFF.filter(function(o){return o.stato==='pronta'}), inv=OFF.filter(function(o){return o.stato!=='pronta'});
+  var nl=attivi().filter(function(c){return c.in_lista}).length;
+  $('pronte').innerHTML=pr.length?pr.map(function(o){return '<div class="card offerta" data-id="'+o.id+'">'+
+     (o.immagine_url?'<img class="flyer" src="'+esc(o.immagine_url)+'" alt="Volantino '+esc(o.titolo)+'">':'')+
+     '<h3>'+esc(o.titolo)+'</h3><p>Pronta da mandare alla lista "Clienti Maro Gel" ('+nl+' persone).</p>'+
+     '<div class="preview">'+esc(testoOfferta(o))+'</div>'+
+     '<div class="stack"><button class="btn wa" data-send><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>Manda su WhatsApp</button>'+
+     '<button class="btn lite" data-copy>Copia solo il testo</button>'+
+     (o.immagine_url?'<a class="btn lite" href="'+esc(o.immagine_url)+'" download target="_blank" rel="noopener">Scarica il volantino</a>':'')+'</div></div>'}).join('')
+    :'<div class="card"><h3>Nessuna offerta da mandare</h3><p>Il volantino e il testo dell\'offerta li prepariamo noi: appena è pronta compare qui, e la mandi con un tocco.</p></div>';
+  $('storico').innerHTML=inv.length?inv.map(function(o){return '<div class="item"><span class="t"><b>'+esc(o.titolo)+'</b><span>'+(o.inviata_at?'Mandata il '+new Date(o.inviata_at).toLocaleDateString('it-IT',{day:'numeric',month:'long'}):'')+(o.destinatari!=null?' a '+o.destinatari+' persone':'')+'</span></span></div>'}).join(''):'<div class="empty">Qui trovi le offerte già mandate.</div>';
+  $('pronte').querySelectorAll('.offerta').forEach(function(card){
+    var o=OFF.find(function(x){return x.id===card.dataset.id});
+    card.querySelector('[data-copy]').addEventListener('click',function(){copia(testoOfferta(o))});
+    card.querySelector('[data-send]').addEventListener('click',function(){manda(o)});
+  });
+}
+function manda(o){
+  var t=testoOfferta(o);
+  function fallback(){copia(t);window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');setTimeout(function(){conferma(o)},800)}
+  if(!navigator.share)return fallback();
+  var getFile=o.immagine_url?fetch(o.immagine_url).then(function(r){return r.blob()}).then(function(b){
+      var ext=(b.type.split('/')[1]||'jpg').replace('jpeg','jpg');return new File([b],'Offerte-MaroGel.'+ext,{type:b.type})}).catch(function(){return null}):Promise.resolve(null);
+  getFile.then(function(f){var d={text:t};if(f&&navigator.canShare&&navigator.canShare({files:[f]}))d.files=[f];
+    return navigator.share(d).then(function(){conferma(o)})}).catch(function(e){if(!e||e.name!=='AbortError')fallback()});
+}
+function conferma(o){
+  apri('<h2>Offerta mandata?</h2><p class="sub">Se l\'hai mandata alla lista "Clienti Maro Gel", la sposto tra le offerte già mandate.</p><div class="stack"><button class="btn" id="cSi">Sì, l\'ho mandata</button><button class="btn lite" id="cNo">Non ancora</button></div>');
+  $('cSi').addEventListener('click',function(){var n=attivi().filter(function(c){return c.in_lista}).length;
+    rpc('marogel_offerta_inviata',{p_pin:PIN,p_id:o.id,p_destinatari:n}).then(function(){chiudi();toast('Segnata come mandata');carica()}).catch(function(e){toast(e.message)})});
   $('cNo').addEventListener('click',chiudi);
 }
-$('oSend').addEventListener('click',function(){
-  var t=testoFinale();
-  if(navigator.share){
-    var data={text:t};
-    if(imgFile&&navigator.canShare&&navigator.canShare({files:[imgFile]}))data.files=[imgFile];
-    navigator.share(data).then(chiediConferma).catch(function(e){if(e&&e.name!=='AbortError'){copia(t);window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank')}});
-  } else { window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank'); setTimeout(chiediConferma,800); }
-});
 function copia(t){if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast('Testo copiato')})}
-$('oCopy').addEventListener('click',function(){copia(testoFinale())});
 
 /* NUMERI */
 function rNumeri(){
