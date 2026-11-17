@@ -163,6 +163,7 @@ footer .sig{margin-top:14px;font-family:var(--serif);font-style:italic;font-size
 <script>
 (function(){
   var NUM='393891876406';
+  var SB='https://quodidhaarcozvqsqrnz.supabase.co',KEY='sb_publishable_yeRlSxywXnmQs0GurpJh-A_q2Hhf-y2';
   var p=new URLSearchParams(location.search);
   var src=(p.get('src')||p.get('fonte')||'sito').toLowerCase().replace(/[^a-z0-9_-]/g,'').slice(0,30);
   document.getElementById('fonte').value=src;
@@ -178,10 +179,15 @@ footer .sig{margin-top:14px;font-family:var(--serif);font-style:italic;font-size
     var msg='Ciao Maro Gel! Sono '+nome+' e voglio ricevere le vostre offerte su WhatsApp (iscrizione da '+(src==='nfc'?'statuina in negozio':'sito')+')';
     var wa='https://wa.me/'+NUM+'?text='+encodeURIComponent(msg);
     document.getElementById('waAgain').href=wa;
-    document.getElementById('formBox').style.display='none';
-    document.getElementById('okBox').style.display='block';
-    document.getElementById('okBox').scrollIntoView({behavior:'smooth',block:'start'});
-    setTimeout(function(){location.href=wa;},900);
+    var btn=document.getElementById('go');btn.disabled=true;
+    var done=false;function vai(){if(done)return;done=true;
+      document.getElementById('formBox').style.display='none';
+      document.getElementById('okBox').style.display='block';
+      document.getElementById('okBox').scrollIntoView({behavior:'smooth',block:'start'});
+      setTimeout(function(){location.href=wa;},900);}
+    setTimeout(vai,3000);
+    fetch(SB+'/rest/v1/rpc/marogel_iscrivi',{method:'POST',headers:{'apikey':KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({p_nome:nome,p_tel:tel,p_fonte:src,p_consenso:true})}).catch(function(){}).then(vai);
   });
 })();
 </script>

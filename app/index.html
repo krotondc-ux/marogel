@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maro Gel · Clienti</title>
+<meta name="theme-color" content="#0A2342">
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Maro Gel">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--abisso:#0A2342;--abisso-2:#0F2E57;--brina:#F3F9FD;--ghiaccio:#CFE6F5;--ghiaccio-2:#E4F0F9;--maro:#1F5FC8;--argento:#9FB3C8;--testo:#1B2D4A;--muto:#5C6F8C;--verde:#1E8E5A;--rosso:#B3261E;
+--serif:"Cormorant Garamond",Georgia,serif;--sans:Manrope,system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:var(--sans);color:var(--testo);background:var(--brina);-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--maro);outline-offset:2px;border-radius:8px}
+.hidden{display:none!important}
+
+/* LOGIN */
+#login{min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:32px 28px;background:radial-gradient(120% 70% at 50% 0%,#16407a,var(--abisso) 70%);color:var(--brina)}
+#login .w{max-width:380px;width:100%;margin:0 auto}
+#login svg{width:64px;height:64px;margin-bottom:22px}
+#login h1{font-family:var(--serif);font-size:46px;line-height:1}
+#login p{margin:10px 0 26px;color:#c5d7ea;font-size:15px;line-height:1.5}
+#login input{width:100%;padding:17px 16px;border-radius:16px;border:1.5px solid rgba(207,230,245,.3);background:rgba(255,255,255,.07);color:#fff;font-size:18px;letter-spacing:.04em;outline:none}
+#login input:focus{border-color:var(--ghiaccio)}
+#login button{width:100%;margin-top:14px;padding:17px;border:0;border-radius:16px;background:var(--brina);color:var(--abisso);font-weight:800;font-size:16px}
+#login .e{color:#ffb4ab;font-size:14px;margin-top:12px;min-height:20px}
+
+/* APP SHELL */
+#app{min-height:100%;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+.top{position:sticky;top:0;z-index:5;background:var(--abisso);color:var(--brina);padding:calc(14px + env(safe-area-inset-top)) 20px 16px}
+.top .row{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:640px;margin:0 auto}
+.top h1{font-family:var(--serif);font-size:30px;line-height:1}
+.top small{display:block;font-size:12.5px;color:#a9c0da;margin-top:3px}
+.iconbtn{width:42px;height:42px;border-radius:13px;border:1px solid rgba(207,230,245,.25);background:transparent;color:var(--brina);display:grid;place-content:center}
+.iconbtn svg{width:20px;height:20px}
+main{max-width:640px;margin:0 auto;padding:18px 18px 10px}
+h2{font-family:var(--serif);font-size:28px;line-height:1.05;color:var(--abisso);margin:6px 0 6px}
+.sub{color:var(--muto);font-size:14.5px;line-height:1.55;margin-bottom:16px}
+
+/* tabs */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:#fff;border-top:1px solid var(--ghiaccio);display:flex;justify-content:space-around;padding:8px 6px calc(8px + env(safe-area-inset-bottom))}
+nav.tabs button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:var(--argento);padding:6px 0;position:relative}
+nav.tabs svg{width:23px;height:23px}
+nav.tabs button.on{color:var(--abisso)}
+.dot{position:absolute;top:2px;left:calc(50% + 8px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--maro);color:#fff;font-size:10.5px;line-height:18px;text-align:center}
+
+/* controls */
+.search{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--ghiaccio);border-radius:15px;padding:0 14px}
+.search input{flex:1;border:0;outline:none;background:none;padding:14px 0;font-size:16px}
+.search svg{width:19px;height:19px;color:var(--argento)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1.5px solid var(--ghiaccio);background:#fff;color:var(--muto);border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:700}
+.chip.on{background:var(--abisso);border-color:var(--abisso);color:#fff}
+.list{margin-top:10px;background:#fff;border:1px solid var(--ghiaccio);border-radius:20px;overflow:hidden}
+.item{display:flex;align-items:center;gap:14px;padding:14px 16px;border-top:1px solid var(--ghiaccio-2);width:100%;background:none;border-left:0;border-right:0;border-bottom:0;text-align:left}
+.item:first-child{border-top:0}
+.av{flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:var(--ghiaccio-2);color:var(--abisso);display:grid;place-content:center;font-weight:800;font-size:16px}
+.item .t{flex:1;min-width:0}
+.item .t b{display:block;font-size:15.5px;color:var(--abisso);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .t span{display:block;font-size:13px;color:var(--muto);margin-top:2px}
+.tag{flex:0 0 auto;font-size:11.5px;font-weight:700;border-radius:8px;padding:4px 8px;background:var(--ghiaccio-2);color:var(--abisso)}
+.tag.nfc{background:#dff3ea;color:var(--verde)}
+.tag.off{background:#fbe4e2;color:var(--rosso)}
+.empty{padding:34px 20px;text-align:center;color:var(--muto);font-size:14.5px;line-height:1.55}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:0;border-radius:16px;padding:16px;font-weight:800;font-size:15.5px;background:var(--abisso);color:var(--brina);text-decoration:none}
+.btn svg{width:20px;height:20px}
+.btn.lite{background:#fff;color:var(--abisso);border:1.5px solid var(--abisso)}
+.btn.wa svg{color:#3ddc84}
+.btn[disabled]{opacity:.45}
+.stack>*+*{margin-top:10px}
+.card{background:#fff;border:1px solid var(--ghiaccio);border-radius:20px;padding:18px}
+.card+.card{margin-top:14px}
+.card h3{font-size:16.5px;color:var(--abisso);font-weight:800}
+.card p{font-size:14px;color:var(--muto);line-height:1.55;margin:6px 0 14px}
+.big{font-family:var(--serif);font-size:54px;line-height:1;color:var(--abisso)}
+.names{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+.names span{font-size:13px;background:var(--ghiaccio-2);color:var(--abisso);border-radius:8px;padding:5px 9px;font-weight:600}
+ol.steps{margin:4px 0 0 18px;color:var(--muto);font-size:13.5px;line-height:1.6}
+.fab{position:fixed;right:18px;bottom:calc(92px + env(safe-area-inset-bottom));z-index:6;width:58px;height:58px;border-radius:19px;border:0;background:var(--maro);color:#fff;display:grid;place-content:center;box-shadow:0 14px 30px -10px rgba(31,95,200,.7)}
+.fab svg{width:26px;height:26px}
+
+/* form fields */
+.f{display:block;margin-bottom:12px}
+.f span{display:block;font-size:12.5px;font-weight:700;color:var(--muto);margin:0 0 6px 2px}
+.f input,.f textarea{width:100%;border:1.5px solid var(--ghiaccio);background:#fff;border-radius:14px;padding:14px;font-size:16px;outline:none}
+.f textarea{min-height:150px;resize:vertical;line-height:1.5}
+.f input:focus,.f textarea:focus{border-color:var(--maro)}
+.photo{display:flex;align-items:center;gap:12px;border:1.5px dashed var(--argento);border-radius:14px;padding:12px;background:#fff;cursor:pointer}
+.photo img{width:64px;height:64px;object-fit:cover;border-radius:10px}
+.photo .ph{width:64px;height:64px;border-radius:10px;background:var(--ghiaccio-2);display:grid;place-content:center;color:var(--argento)}
+.photo b{font-size:14.5px;color:var(--abisso)}
+.photo small{display:block;color:var(--muto);font-size:12.5px;margin-top:2px}
+.preview{white-space:pre-wrap;background:#e7f7ec;border-radius:16px 16px 16px 4px;padding:14px;font-size:14.5px;line-height:1.5;color:#173b2a;margin:6px 0 14px}
+
+/* stats */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:#fff;border:1px solid var(--ghiaccio);border-radius:18px;padding:16px}
+.stat b{display:block;font-family:var(--serif);font-size:40px;line-height:1;color:var(--abisso)}
+.stat span{display:block;font-size:13px;color:var(--muto);margin-top:6px;font-weight:600}
+.bars{display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:10px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px}
+.bar i{display:block;width:100%;border-radius:8px 8px 4px 4px;background:var(--maro);min-height:3px}
+.bar em{font-style:normal;font-size:11px;color:var(--muto)}
+.bar strong{font-size:12px;color:var(--abisso)}
+
+/* sheet */
+.overlay{position:fixed;inset:0;background:rgba(10,35,66,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:640px;background:var(--brina);border-radius:26px 26px 0 0;padding:10px 20px calc(22px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}}
+@keyframes up{from{transform:translateY(30px);opacity:.6}}
+.grab{width:42px;height:5px;border-radius:3px;background:var(--argento);opacity:.5;margin:2px auto 14px}
+.sheet h2{margin-top:0}
+.kv{font-size:14px;color:var(--muto);line-height:1.7;margin-bottom:16px}
+.kv b{color:var(--abisso)}
+.toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--abisso);color:#fff;padding:12px 18px;border-radius:14px;font-size:14px;font-weight:600;z-index:30;max-width:90vw;text-align:center}
+.lnk{background:none;border:0;color:var(--maro);font-weight:700;font-size:14px;padding:8px 0}
+.danger{color:var(--rosso)}
+</style>
+</head>
+<body>
+
+<section id="login">
+  <div class="w">
+    <svg viewBox="-110 -110 220 220" aria-hidden="true"><g fill="none" stroke="#CFE6F5" stroke-width="9" stroke-linecap="round">
+      <path d="M0 -96V96M-83 -48 83 48M-83 48 83 -48"/><path d="M-22 -60 0 -38 22 -60M-22 60 0 38 22 60"/></g></svg>
+    <h1>Maro Gel</h1>
+    <p>I clienti iscritti alle offerte, la rubrica e gli invii su WhatsApp. Inserisci il codice di accesso del negozio.</p>
+    <form id="lf">
+      <input id="pin" type="password" autocomplete="current-password" placeholder="Codice di accesso" required>
+      <button type="submit">Entra</button>
+      <div class="e" id="le" role="alert"></div>
+    </form>
+  </div>
+</section>
+
+<div id="app" class="hidden">
+  <header class="top"><div class="row">
+    <div><h1 id="title">Clienti</h1><small id="subtitle"></small></div>
+    <button class="iconbtn" id="refresh" aria-label="Aggiorna"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"/><path d="M21 3v5h-5"/></svg></button>
+  </div></header>
+
+  <main>
+    <!-- CLIENTI -->
+    <section id="v-clienti">
+      <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Cerca nome o numero" aria-label="Cerca cliente"></label>
+      <div class="chips" id="chips">
+        <button class="chip on" data-f="tutti">Tutti</button>
+        <button class="chip" data-f="nfc">Dalla statuina</button>
+        <button class="chip" data-f="sito">Dal sito</button>
+        <button class="chip" data-f="manuale">Aggiunti a mano</button>
+        <button class="chip" data-f="off">Disiscritti</button>
+      </div>
+      <div class="list" id="lista"></div>
+    </section>
+
+    <!-- RUBRICA -->
+    <section id="v-rubrica" class="hidden">
+      <div class="card">
+        <h3>1. Salva i nuovi in rubrica</h3>
+        <p>Scarichi un unico file con tutti i clienti nuovi: aprilo sul telefono e scegli "Aggiungi tutti". I nomi finiscono in rubrica come "Nome - Cliente".</p>
+        <div class="big" id="nRub">0</div>
+        <div class="names" id="namesRub"></div>
+        <div class="stack">
+          <button class="btn" id="dlVcf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></svg>Scarica i contatti</button>
+          <button class="btn lite" id="okRub">Li ho salvati in rubrica</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>2. Aggiungili alla lista broadcast</h3>
+        <p>Su WhatsApp Business apri la lista "Clienti Maro Gel" e aggiungi questi nomi. Le offerte arrivano solo a chi è nella lista.</p>
+        <div class="big" id="nLista">0</div>
+        <div class="names" id="namesLista"></div>
+        <button class="btn lite" id="okLista">Li ho aggiunti alla lista</button>
+        <ol class="steps" style="margin-top:14px">
+          <li>WhatsApp Business → tre puntini (Android) o "Liste" in basso (iPhone) → <b>Nuovo broadcast</b>.</li>
+          <li>La prima volta chiamala "Clienti Maro Gel"; dopo, aprila e tocca <b>Modifica destinatari</b>.</li>
+          <li>Ogni lista arriva al massimo a 256 persone: oltre, ne crei una seconda.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- OFFERTE -->
+    <section id="v-offerte" class="hidden">
+      <h2>Nuova offerta</h2>
+      <p class="sub">Scrivi l'offerta, aggiungi la foto del volantino e mandala alla lista "Clienti Maro Gel".</p>
+      <label class="f"><span>Titolo (resta nello storico)</span><input id="oTit" placeholder="Es. Super Offerte di novembre"></label>
+      <label class="f"><span>Messaggio</span><textarea id="oTxt"></textarea></label>
+      <label class="f"><span>Valida fino al</span><input id="oScad" type="date"></label>
+      <label class="photo" for="oImg"><span class="ph" id="oPh"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="m21 17-5-5-8 7"/></svg></span>
+        <span><b id="oImgName">Aggiungi la foto del volantino</b><small>Facoltativa, dalla galleria</small></span></label>
+      <input id="oImg" type="file" accept="image/*" class="hidden">
+      <p class="sub" style="margin:16px 0 4px">Anteprima</p>
+      <div class="preview" id="oPrev"></div>
+      <div class="stack">
+        <button class="btn wa" id="oSend"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.6 2.1 1.1 1 2.1 1.3 2.4 1.4.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 .9c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg>Manda su WhatsApp</button>
+        <button class="btn lite" id="oCopy">Copia solo il testo</button>
+      </div>
+      <h2 style="margin-top:30px">Offerte inviate</h2>
+      <div class="list" id="storico"></div>
+    </section>
+
+    <!-- NUMERI -->
+    <section id="v-numeri" class="hidden">
+      <div class="grid2">
+        <div class="stat"><b id="sAtt">0</b><span>iscritti attivi</span></div>
+        <div class="stat"><b id="s7">0</b><span>nuovi negli ultimi 7 giorni</span></div>
+        <div class="stat"><b id="sNfc">0</b><span>dalla statuina</span></div>
+        <div class="stat"><b id="sSito">0</b><span>dal sito</span></div>
+        <div class="stat"><b id="sMan">0</b><span>aggiunti a mano</span></div>
+        <div class="stat"><b id="sLista">0</b><span>nella lista broadcast</span></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>Nuovi iscritti per settimana</h3>
+        <div class="bars" id="bars"></div>
+      </div>
+      <button class="lnk danger" id="logout" style="margin-top:18px">Esci da questo telefono</button>
+    </section>
+  </main>
+
+  <button class="fab" id="fab" aria-label="Aggiungi cliente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+
+  <nav class="tabs">
+    <button data-v="clienti" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>Clienti</button>
+    <button data-v="rubrica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14Z"/><path d="M20 17v4H6.5A2.5 2.5 0 0 1 4 18.5"/></svg>Rubrica<span class="dot hidden" id="dotRub"></span></button>
+    <button data-v="offerte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>Offerte</button>
+    <button data-v="numeri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Numeri</button>
+  </nav>
+</div>
+
+<div id="ov" class="overlay hidden"><div class="sheet" id="sh"></div></div>
+
+<script>
+(function(){
+var SB='https://quodidhaarcozvqsqrnz.supabase.co', KEY='sb_publishable_yeRlSxywXnmQs0GurpJh-A_q2Hhf-y2';
+var PIN=null, CL=[], OFF=[], filtro='tutti', vista='clienti', imgFile=null;
+var $=function(id){return document.getElementById(id)};
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+function rpc(fn,args){
+  return fetch(SB+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify(args||{})})
+  .then(function(r){return r.text().then(function(t){var d=t?JSON.parse(t):null;if(!r.ok)throw new Error((d&&d.message)||'Errore di rete');return d})});
+}
+function toast(m){var t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2600)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function fmtTel(t){t=String(t||'');if(t.indexOf('39')===0&&t.length===12)return t.slice(2,5)+' '+t.slice(5,8)+' '+t.slice(8);return '+'+t}
+function fmtData(d){var x=new Date(d);return x.toLocaleDateString('it-IT',{day:'numeric',month:'short'})}
+function fonteLbl(f){return f==='nfc'?'Statuina':f==='manuale'?'A mano':f==='sito'?'Sito':f}
+
+/* LOGIN */
+function entra(pin,silent){
+  return rpc('marogel_login',{p_pin:pin}).then(function(){PIN=pin;store('mg_pin',pin);$('login').classList.add('hidden');$('app').classList.remove('hidden');carica();})
+  .catch(function(e){store('mg_pin',null);if(!silent)$('le').textContent=e.message;$('login').classList.remove('hidden');$('app').classList.add('hidden');});
+}
+$('lf').addEventListener('submit',function(e){e.preventDefault();$('le').textContent='';entra($('pin').value.trim())});
+var saved=store('mg_pin'); if(saved){entra(saved,true)}
+$('logout').addEventListener('click',function(){store('mg_pin',null);location.reload()});
+
+/* DATA */
+function carica(){
+  return Promise.all([rpc('marogel_clienti_lista',{p_pin:PIN}),rpc('marogel_offerte_lista',{p_pin:PIN})])
+  .then(function(r){CL=r[0]||[];OFF=r[1]||[];render()}).catch(function(e){toast(e.message)});
+}
+$('refresh').addEventListener('click',function(){carica().then(function(){toast('Aggiornato')})});
+
+/* NAV */
+var titoli={clienti:'Clienti',rubrica:'Rubrica',offerte:'Offerte',numeri:'Numeri'};
+document.querySelectorAll('nav.tabs button').forEach(function(b){b.addEventListener('click',function(){vai(b.dataset.v)})});
+function vai(v){vista=v;document.querySelectorAll('nav.tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v)});
+  ['clienti','rubrica','offerte','numeri'].forEach(function(x){$('v-'+x).classList.toggle('hidden',x!==v)});
+  $('title').textContent=titoli[v];$('fab').classList.toggle('hidden',v!=='clienti');window.scrollTo(0,0);render();}
+
+function attivi(){return CL.filter(function(c){return c.attivo})}
+function render(){
+  var a=attivi();
+  $('subtitle').textContent=a.length+(a.length===1?' iscritto alle offerte':' iscritti alle offerte');
+  var daRub=a.filter(function(c){return !c.in_rubrica});
+  var dot=$('dotRub');dot.textContent=daRub.length;dot.classList.toggle('hidden',!daRub.length);
+  if(vista==='clienti')rClienti(); if(vista==='rubrica')rRubrica(); if(vista==='offerte')rOfferte(); if(vista==='numeri')rNumeri();
+}
+
+/* CLIENTI */
+$('q').addEventListener('input',rClienti);
+$('chips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;filtro=b.dataset.f;
+  document.querySelectorAll('.chip').forEach(function(c){c.classList.toggle('on',c===b)});rClienti()});
+function rClienti(){
+  var q=$('q').value.trim().toLowerCase().replace(/\s/g,'');
+  var l=CL.filter(function(c){
+    if(filtro==='off')return !c.attivo; if(!c.attivo)return false;
+    if(filtro!=='tutti'&&c.fonte!==filtro)return false;
+    return !q||c.nome.toLowerCase().replace(/\s/g,'').indexOf(q)>-1||c.telefono.indexOf(q.replace(/^\+/,''))>-1;
+  });
+  if(!l.length){$('lista').innerHTML='<div class="empty">'+(CL.length?'Nessun cliente con questi filtri.':'Ancora nessun iscritto.<br>Appena qualcuno avvicina il telefono alla statuina, compare qui.')+'</div>';return}
+  $('lista').innerHTML=l.map(function(c){
+    var cls=!c.attivo?'off':c.fonte==='nfc'?'nfc':'';
+    return '<button class="item" data-id="'+c.id+'"><span class="av">'+esc(c.nome.charAt(0).toUpperCase())+'</span><span class="t"><b>'+esc(c.nome)+'</b><span>'+fmtTel(c.telefono)+' · '+fmtData(c.creato_at)+'</span></span><span class="tag '+cls+'">'+(c.attivo?esc(fonteLbl(c.fonte)):'Disiscritto')+'</span></button>';
+  }).join('');
+}
+$('lista').addEventListener('click',function(e){var b=e.target.closest('.item');if(b)scheda(b.dataset.id)});
+
+function apri(html){$('sh').innerHTML='<div class="grab"></div>'+html;$('ov').classList.remove('hidden')}
+function chiudi(){$('ov').classList.add('hidden')}
+$('ov').addEventListener('click',function(e){if(e.target===$('ov'))chiudi()});
+
+function scheda(id){
+  var c=CL.find(function(x){return x.id===id});if(!c)return;
+  apri('<h2>'+esc(c.nome)+'</h2><div class="kv"><b>'+fmtTel(c.telefono)+'</b><br>Iscritto il '+new Date(c.creato_at).toLocaleDateString('it-IT')+' · '+esc(fonteLbl(c.fonte))+
+   '<br>In rubrica: <b>'+(c.in_rubrica?'sì':'no')+'</b> · In lista broadcast: <b>'+(c.in_lista?'sì':'no')+'</b>'+(c.nota?'<br>Nota: '+esc(c.nota):'')+'</div>'+
+   '<div class="stack"><a class="btn wa" href="https://wa.me/'+c.telefono+'" target="_blank" rel="noopener">Scrivi su WhatsApp</a>'+
+   '<a class="btn lite" href="tel:+'+c.telefono+'">Chiama</a>'+
+   '<button class="btn lite" data-a="in_rubrica">'+(c.in_rubrica?'Segna come non in rubrica':'Segna come salvato in rubrica')+'</button>'+
+   '<button class="btn lite" data-a="in_lista">'+(c.in_lista?'Togli dalla lista broadcast':'Segna come aggiunto alla lista')+'</button>'+
+   '<button class="lnk danger" data-a="attivo">'+(c.attivo?'Disiscrivi (ha scritto STOP)':'Riattiva iscrizione')+'</button></div>');
+  $('sh').querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){
+    var campo=b.dataset.a, val=!c[campo];
+    rpc('marogel_segna',{p_pin:PIN,p_ids:[c.id],p_campo:campo,p_valore:val}).then(function(){c[campo]=val;chiudi();render();toast('Fatto')}).catch(function(e){toast(e.message)});
+  })});
+}
+
+$('fab').addEventListener('click',function(){
+  apri('<h2>Nuovo cliente</h2><p class="sub">Per chi si iscrive a voce al bancone. Chiedigli sempre il permesso di mandargli le offerte.</p>'+
+   '<form id="nf"><label class="f"><span>Nome</span><input id="nNome" autocomplete="off" required></label>'+
+   '<label class="f"><span>Numero WhatsApp</span><input id="nTel" type="tel" inputmode="tel" required></label>'+
+   '<label class="f"><span>Nota (facoltativa)</span><input id="nNota" placeholder="Es. preferisce il pesce"></label>'+
+   '<button class="btn" type="submit">Aggiungi cliente</button></form>');
+  $('nNome').focus();
+  $('nf').addEventListener('submit',function(e){e.preventDefault();
+    rpc('marogel_cliente_aggiungi',{p_pin:PIN,p_nome:$('nNome').value,p_tel:$('nTel').value,p_nota:$('nNota').value})
+    .then(function(r){chiudi();toast(r==='gia_iscritto'?'Questo numero era già iscritto':'Cliente aggiunto');carica()}).catch(function(e){toast(e.message)});
+  });
+});
+
+/* RUBRICA */
+function rRubrica(){
+  var a=attivi(), r=a.filter(function(c){return !c.in_rubrica}), l=a.filter(function(c){return c.in_rubrica&&!c.in_lista});
+  $('nRub').textContent=r.length;$('nLista').textContent=l.length;
+  $('namesRub').innerHTML=r.slice(0,40).map(function(c){return '<span>'+esc(c.nome)+'</span>'}).join('')+(r.length>40?'<span>+'+(r.length-40)+'</span>':'');
+  $('namesLista').innerHTML=l.map(function(c){return '<span>'+esc(c.nome)+'</span>'}).join('');
+  $('dlVcf').disabled=!r.length;$('okRub').disabled=!r.length;$('okLista').disabled=!l.length;
+}
+function vcard(list){return list.map(function(c){var n=c.nome.replace(/[;\\,]/g,' ').trim();
+  return 'BEGIN:VCARD\r\nVERSION:3.0\r\nN:;'+n+' - Cliente;;;\r\nFN:'+n+' - Cliente\r\nTEL;TYPE=CELL:+'+c.telefono+'\r\nNOTE:Iscritto offerte Maro Gel\r\nEND:VCARD'}).join('\r\n')+'\r\n'}
+$('dlVcf').addEventListener('click',function(){
+  var r=attivi().filter(function(c){return !c.in_rubrica});if(!r.length)return;
+  var name='Clienti-MaroGel-'+new Date().toISOString().slice(0,10)+'.vcf';
+  var blob=new Blob([vcard(r)],{type:'text/vcard'});
+  var file;try{file=new File([blob],name,{type:'text/vcard'})}catch(e){}
+  if(file&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:'Contatti Maro Gel'}).catch(function(){})}
+  else{var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000)}
+});
+function segnaTutti(lista,campo,msg){if(!lista.length)return;
+  rpc('marogel_segna',{p_pin:PIN,p_ids:lista.map(function(c){return c.id}),p_campo:campo,p_valore:true})
+  .then(function(){lista.forEach(function(c){c[campo]=true});render();toast(msg)}).catch(function(e){toast(e.message)})}
+$('okRub').addEventListener('click',function(){segnaTutti(attivi().filter(function(c){return !c.in_rubrica}),'in_rubrica','Segnati come salvati in rubrica')});
+$('okLista').addEventListener('click',function(){segnaTutti(attivi().filter(function(c){return c.in_rubrica&&!c.in_lista}),'in_lista','Segnati come aggiunti alla lista')});
+
+/* OFFERTE */
+var BASE='❄️ *SUPER OFFERTE MARO GEL* ❄️\n\n• Prodotto 1 – € 0,00\n• Prodotto 2 – € 0,00\n• Prodotto 3 – € 0,00\n\nPrenota rispondendo a questo messaggio e ritira in negozio.\n📍 Via Tommaso Campanella 68, Catanzaro';
+if(!$('oTxt').value)$('oTxt').value=store('mg_bozza')||BASE;
+function testoFinale(){var t=$('oTxt').value.trim(),d=$('oScad').value;
+  if(d){t+='\n\n⏳ Valide fino al '+new Date(d+'T12:00').toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'})}
+  return t+'\n\n_Per non ricevere più le offerte rispondi STOP_'}
+function rOfferte(){$('oPrev').textContent=testoFinale();
+  $('storico').innerHTML=OFF.length?OFF.map(function(o){return '<div class="item"><span class="t"><b>'+esc(o.titolo)+'</b><span>'+new Date(o.inviata_at).toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'})+(o.destinatari!=null?' · '+o.destinatari+' in lista':'')+'</span></span></div>'}).join(''):'<div class="empty">Qui trovi le offerte già mandate.</div>'}
+['oTxt','oScad'].forEach(function(id){$(id).addEventListener('input',function(){store('mg_bozza',$('oTxt').value);$('oPrev').textContent=testoFinale()})});
+$('oImg').addEventListener('change',function(){imgFile=this.files[0]||null;
+  if(imgFile){var u=URL.createObjectURL(imgFile);$('oPh').innerHTML='<img src="'+u+'" alt="">';$('oImgName').textContent=imgFile.name}});
+function salvaStorico(){
+  var n=attivi().filter(function(c){return c.in_lista}).length;
+  return rpc('marogel_offerta_salva',{p_pin:PIN,p_titolo:$('oTit').value||('Offerta del '+new Date().toLocaleDateString('it-IT')),p_testo:testoFinale(),p_scadenza:$('oScad').value||null,p_destinatari:n})
+  .then(function(){return carica()})}
+function chiediConferma(){
+  apri('<h2>Offerta inviata?</h2><p class="sub">Se l\'hai mandata alla lista "Clienti Maro Gel", la salvo nello storico.</p><div class="stack"><button class="btn" id="cSi">Sì, l\'ho mandata</button><button class="btn lite" id="cNo">Non ancora</button></div>');
+  $('cSi').addEventListener('click',function(){salvaStorico().then(function(){chiudi();toast('Salvata nello storico')}).catch(function(e){toast(e.message)})});
+  $('cNo').addEventListener('click',chiudi);
+}
+$('oSend').addEventListener('click',function(){
+  var t=testoFinale();
+  if(navigator.share){
+    var data={text:t};
+    if(imgFile&&navigator.canShare&&navigator.canShare({files:[imgFile]}))data.files=[imgFile];
+    navigator.share(data).then(chiediConferma).catch(function(e){if(e&&e.name!=='AbortError'){copia(t);window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank')}});
+  } else { window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank'); setTimeout(chiediConferma,800); }
+});
+function copia(t){if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast('Testo copiato')})}
+$('oCopy').addEventListener('click',function(){copia(testoFinale())});
+
+/* NUMERI */
+function rNumeri(){
+  var a=attivi(),now=Date.now(),wk=7*864e5;
+  $('sAtt').textContent=a.length;
+  $('s7').textContent=a.filter(function(c){return now-new Date(c.creato_at)<wk}).length;
+  $('sNfc').textContent=a.filter(function(c){return c.fonte==='nfc'}).length;
+  $('sSito').textContent=a.filter(function(c){return c.fonte==='sito'}).length;
+  $('sMan').textContent=a.filter(function(c){return c.fonte==='manuale'}).length;
+  $('sLista').textContent=a.filter(function(c){return c.in_lista}).length;
+  var w=[],i,max=1;for(i=5;i>=0;i--){var fine=now-i*wk,inizio=fine-wk;
+    var n=CL.filter(function(c){var t=new Date(c.creato_at).getTime();return t>inizio&&t<=fine}).length;max=Math.max(max,n);
+    w.push({n:n,l:new Date(inizio+864e5).toLocaleDateString('it-IT',{day:'numeric',month:'numeric'})})}
+  $('bars').innerHTML=w.map(function(x){return '<div class="bar"><strong>'+x.n+'</strong><i style="height:'+Math.max(2,x.n/max*100)+'%"></i><em>'+x.l+'</em></div>'}).join('');
+}
+})();
+</script>
+</body>
+</html>
