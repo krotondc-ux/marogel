@@ -128,7 +128,7 @@ footer{text-align:center;font-size:11.5px;color:#5a6f99;margin-top:14px;line-hei
     if(!f.consenso.checked){return show('Spunta il consenso per ricevere le offerte.');}
     f.telefono.value='+'+tel;
     var btn=document.getElementById('go');btn.disabled=true;btn.style.opacity=.7;
-    var msg='Ciao Maro Gel! Sono '+nome+' e voglio ricevere le vostre offerte su WhatsApp ❄️ (iscrizione da '+(src==='nfc'?'statuina in negozio':'sito')+')';
+    var msg='Ciao Maro Gel! Sono '+nome+' e voglio ricevere le vostre offerte su WhatsApp (iscrizione da '+(src==='nfc'?'statuina in negozio':'sito')+')';
     var wa='https://wa.me/'+NUM+'?text='+encodeURIComponent(msg);
     document.getElementById('waAgain').href=wa;
     document.getElementById('formBox').style.display='none';
