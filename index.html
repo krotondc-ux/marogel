@@ -4,112 +4,107 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maro Gel · Surgelati a Catanzaro</title>
-<meta name="description" content="Maro Gel, surgelati di qualità a Catanzaro. Ricevi le offerte su WhatsApp, salva il nostro numero e vieni a trovarci in Via Tommaso Campanella 68.">
-<meta name="theme-color" content="#0A2342">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A2342'/%3E%3Cg stroke='%23F3F9FD' stroke-width='6' stroke-linecap='round'%3E%3Cpath d='M50 16v68M20.6 33l58.8 34M20.6 67l58.8-34'/%3E%3C/g%3E%3C/svg%3E">
+<meta name="description" content="Maro Gel, surgelati di qualità a Catanzaro. Ricevi le Super Offerte su WhatsApp, salva il nostro numero e vieni a trovarci in Via Tommaso Campanella 68.">
+<meta name="theme-color" content="#26358C">
+<meta property="og:title" content="Maro Gel · Surgelati a Catanzaro">
+<meta property="og:description" content="Le Super Offerte di Maro Gel su WhatsApp, ogni settimana.">
+<meta property="og:image" content="https://krotondc-ux.github.io/marogel/img/logo-512.png">
+<link rel="icon" href="img/logo-blu.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --abisso:#0A2342; --abisso-2:#0F2E57; --brina:#F3F9FD; --ghiaccio:#CFE6F5;
-  --maro:#1F5FC8; --argento:#9FB3C8; --testo:#1B2D4A; --muto:#5C6F8C;
-  --serif:"Cormorant Garamond",Georgia,serif; --sans:Manrope,system-ui,sans-serif;
-}
+:root{--blu:#26358C;--blu-2:#1E2A73;--ciano:#19B6E8;--cielo:#D9F3FC;--ghiaccio:#EEF9FE;--giallo:#FFC93C;--giallo-2:#FFE08A;--wa:#25D366;--testo:#1D2560;--muto:#56608F}
 *{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--abisso)}
-body{font-family:var(--sans);color:var(--testo);background:var(--abisso);min-height:100vh;-webkit-font-smoothing:antialiased}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--testo);background:#fff;-webkit-font-smoothing:antialiased}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--maro);outline-offset:3px;border-radius:6px}
+:focus-visible{outline:3px solid var(--giallo);outline-offset:3px;border-radius:8px}
 
 /* HERO */
-.hero{position:relative;color:var(--brina);text-align:center;padding:calc(34px + env(safe-area-inset-top)) 24px 92px;overflow:hidden;
-  background:radial-gradient(120% 80% at 50% 0%,#16407a 0%,var(--abisso-2) 45%,var(--abisso) 100%)}
-.flake{width:min(58vw,230px);height:auto;display:block;margin:6px auto 18px;overflow:visible}
-.flake path{fill:none;stroke:var(--ghiaccio);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.flake .core{stroke-width:2.8}
-.flake circle{fill:none;stroke:var(--ghiaccio);stroke-width:1.4;opacity:.55}
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;padding:calc(26px + env(safe-area-inset-top)) 22px 110px;
+  background:linear-gradient(160deg,var(--blu) 0%,#2550B8 45%,var(--ciano) 100%)}
+.flakes{position:absolute;inset:0;pointer-events:none}
+.flakes svg{position:absolute;fill:none;stroke:#fff;stroke-linecap:round;opacity:.16}
+.logo{position:relative;width:min(74vw,300px);height:auto;display:block;margin:0 auto;filter:drop-shadow(0 10px 22px rgba(20,30,90,.35))}
 @media (prefers-reduced-motion:no-preference){
-  .flake path,.flake circle{stroke-dasharray:var(--l);stroke-dashoffset:var(--l);animation:grow 2.4s cubic-bezier(.3,.1,.2,1) forwards}
-  .flake .b1{animation-delay:.55s}.flake .b2{animation-delay:.95s}.flake circle{animation-delay:1.3s;animation-duration:1.6s}
-  .rise{opacity:0;transform:translateY(8px);animation:rise .9s 1.5s ease forwards}
+  .logo{animation:pop .9s cubic-bezier(.2,1.4,.4,1) both}
+  .hero .claim,.badge{animation:fade .7s .45s both}
 }
-@keyframes grow{to{stroke-dashoffset:0}}
-@keyframes rise{to{opacity:1;transform:none}}
-.word{font-family:var(--serif);font-weight:600;font-size:clamp(56px,17vw,92px);line-height:.9;letter-spacing:-.01em}
-.word span{display:block;font-style:italic;font-weight:500;font-size:.5em;letter-spacing:.02em;color:var(--ghiaccio);margin-top:10px}
-.tag{max-width:30ch;margin:16px auto 0;font-size:15px;line-height:1.55;color:#c5d7ea}
-.rating{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:13.5px;color:var(--brina);
-  padding:7px 14px;border:1px solid rgba(207,230,245,.28);border-radius:999px}
-.rating b{font-weight:700}
-.stars{color:#f5c84b;letter-spacing:1px}
+@keyframes pop{from{opacity:0;transform:scale(.6) rotate(-30deg)}}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}}
+.claim{position:relative;margin:18px auto 0;max-width:24ch;font-size:clamp(22px,6.4vw,30px);font-weight:800;line-height:1.15}
+.badge{position:relative;display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:14px;font-weight:600;text-decoration:none;color:#fff}
+.badge .st{color:var(--giallo);letter-spacing:1px}
+.wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:70px;display:block}
 
-/* SHEET */
-.sheet{position:relative;margin-top:-56px;background:var(--brina);border-radius:34px 34px 0 0;padding:34px 24px 40px;min-height:60vh}
-.wrap{max-width:460px;margin:0 auto}
-h2{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.05;color:var(--abisso)}
-.lead{margin-top:10px;font-size:15.5px;line-height:1.6;color:var(--muto);max-width:38ch}
-form{margin-top:24px}
+/* CONTENUTO */
+.wrap{max-width:480px;margin:0 auto;padding:0 18px 36px}
+.card{position:relative;margin-top:-64px;background:#fff;border-radius:28px;padding:26px 22px 24px;box-shadow:0 22px 50px -22px rgba(38,53,140,.45);border:2px solid var(--cielo)}
+.ribbon{position:absolute;top:-16px;left:22px;background:var(--giallo);color:var(--blu);font-weight:800;font-size:13.5px;padding:7px 14px;border-radius:12px;box-shadow:0 6px 14px -6px rgba(200,140,0,.6);transform:rotate(-2deg)}
+h2{font-size:25px;font-weight:800;line-height:1.15;color:var(--blu);margin-top:6px}
+.lead{margin-top:8px;font-size:15px;line-height:1.55;color:var(--muto)}
+.perks{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.perks span{font-size:13px;font-weight:600;padding:6px 11px;border-radius:10px;background:var(--ghiaccio);color:var(--blu)}
+form{margin-top:18px}
 .field{position:relative;margin-bottom:12px}
-.field input{width:100%;font:500 17px/1.2 var(--sans);color:var(--abisso);background:#fff;border:1.5px solid var(--ghiaccio);
-  border-radius:16px;padding:24px 16px 10px;outline:none;transition:border-color .2s}
-.field label{position:absolute;left:17px;top:17px;font-size:15px;color:var(--muto);pointer-events:none;transition:.18s ease}
-.field input:focus{border-color:var(--maro)}
-.field input:focus+label,.field input:not(:placeholder-shown)+label{top:8px;font-size:11.5px;font-weight:600;color:var(--maro)}
-.consent{display:flex;gap:12px;align-items:flex-start;margin:16px 0 4px;font-size:13px;line-height:1.5;color:var(--muto);cursor:pointer}
-.consent input{appearance:none;flex:0 0 22px;width:22px;height:22px;border:1.5px solid var(--argento);border-radius:7px;background:#fff;margin-top:1px;display:grid;place-content:center;cursor:pointer}
-.consent input:checked{background:var(--abisso);border-color:var(--abisso)}
-.consent input:checked::after{content:"";width:10px;height:6px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
-.err{display:none;margin-top:10px;font-size:13.5px;font-weight:600;color:#b3261e}
-.cta{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;margin-top:18px;border:0;border-radius:18px;
-  padding:18px;font:700 16.5px var(--sans);color:var(--brina);background:var(--abisso);cursor:pointer;text-decoration:none;
-  box-shadow:0 14px 30px -12px rgba(10,35,66,.55);transition:transform .12s}
-.cta:active{transform:scale(.985)}
-.cta svg{width:22px;height:22px;flex:0 0 22px;color:#3ddc84}
+.field input{width:100%;font:500 17px/1.2 Poppins,sans-serif;color:var(--testo);background:var(--ghiaccio);border:2px solid transparent;border-radius:16px;padding:24px 16px 9px;outline:none;transition:border-color .2s,background .2s}
+.field label{position:absolute;left:18px;top:17px;font-size:15px;color:var(--muto);pointer-events:none;transition:.18s ease}
+.field input:focus{border-color:var(--ciano);background:#fff}
+.field input:focus+label,.field input:not(:placeholder-shown)+label{top:7px;font-size:11.5px;font-weight:700;color:var(--ciano)}
+.consent{display:flex;gap:12px;align-items:flex-start;margin:14px 0 2px;font-size:13px;line-height:1.5;color:var(--muto);cursor:pointer}
+.consent input{appearance:none;flex:0 0 24px;width:24px;height:24px;border:2px solid #b9c3e6;border-radius:8px;background:#fff;display:grid;place-content:center;cursor:pointer}
+.consent input:checked{background:var(--blu);border-color:var(--blu)}
+.consent input:checked::after{content:"";width:11px;height:6px;border:2.5px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.err{display:none;margin-top:10px;font-size:13.5px;font-weight:600;color:#C62828}
+.cta{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;margin-top:18px;border:0;border-radius:18px;padding:18px;font:800 17px Poppins,sans-serif;color:#fff;background:var(--wa);cursor:pointer;text-decoration:none;box-shadow:0 14px 26px -12px rgba(37,211,102,.75);transition:transform .12s}
+.cta:active{transform:scale(.98)}
+.cta svg{width:24px;height:24px;flex:0 0 24px}
 .cta[disabled]{opacity:.7}
+.done{display:none;text-align:center}
+.done .big{font-size:46px;line-height:1}
 
-.done{display:none}
-.done h2{font-size:32px}
-
-.save{margin-top:30px;padding:20px 0 6px;border-top:1px solid var(--ghiaccio);display:flex;align-items:center;gap:16px}
-.save p{flex:1;font-size:14px;line-height:1.5;color:var(--muto)}
-.save p strong{display:block;color:var(--abisso);font-size:15.5px;font-weight:700;margin-bottom:2px}
-.btn2{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:14px;border:1.5px solid var(--abisso);
-  color:var(--abisso);font:700 14px var(--sans);text-decoration:none;background:transparent}
+.save{margin-top:18px;display:flex;align-items:center;gap:14px;padding:18px;border-radius:22px;background:var(--blu);color:#fff}
+.save p{flex:1;font-size:13.5px;line-height:1.45;color:#cfd6f5}
+.save p strong{display:block;font-size:16px;color:#fff;margin-bottom:2px}
+.btn2{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:14px;background:var(--giallo);color:var(--blu);font-weight:800;font-size:14.5px;text-decoration:none}
 .btn2 svg{width:18px;height:18px}
 
-.links{margin-top:26px;list-style:none}
-.links li{border-top:1px solid var(--ghiaccio)}
-.links li:last-child{border-bottom:1px solid var(--ghiaccio)}
-.links a{display:flex;align-items:center;gap:16px;padding:17px 2px;text-decoration:none}
-.ic{flex:0 0 42px;width:42px;height:42px;border-radius:13px;display:grid;place-content:center;background:#e4f0f9;color:var(--abisso)}
-.ic svg{width:21px;height:21px}
-.links .t{flex:1;min-width:0}
-.links .t strong{display:block;font-size:15.5px;font-weight:700;color:var(--abisso)}
-.links .t span{display:block;font-size:13.5px;color:var(--muto);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chev{color:var(--argento);font-size:22px;line-height:1}
-
-footer{margin-top:28px;font-size:12px;line-height:1.6;color:var(--muto)}
-footer .sig{margin-top:14px;font-family:var(--serif);font-style:italic;font-size:17px;color:var(--abisso)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.tile{display:flex;flex-direction:column;justify-content:space-between;min-height:118px;padding:16px;border-radius:22px;text-decoration:none;color:#fff;position:relative;overflow:hidden}
+.tile svg{width:28px;height:28px}
+.tile strong{display:block;font-size:16px;font-weight:800;margin-top:14px}
+.tile span{display:block;font-size:12.5px;opacity:.9;margin-top:1px}
+.t-map{background:linear-gradient(140deg,#19B6E8,#1286C8);grid-column:1/-1;min-height:96px;flex-direction:row;align-items:center;justify-content:flex-start;gap:14px}
+.t-map strong{margin-top:0}
+.t-ig{background:linear-gradient(140deg,#F9A825,#E91E63 55%,#8E24AA)}
+.t-fb{background:linear-gradient(140deg,#1877F2,#26358C)}
+.t-tel{background:var(--giallo);color:var(--blu);grid-column:1/-1;min-height:84px;flex-direction:row;align-items:center;justify-content:flex-start;gap:14px}
+.t-tel strong{margin-top:0}
+.addr{margin-top:16px;text-align:center;font-size:13.5px;color:var(--muto);line-height:1.5}
+footer{margin-top:22px;padding-top:18px;border-top:2px dashed var(--cielo);text-align:center;font-size:12px;line-height:1.6;color:var(--muto)}
+footer img{width:70px;margin:14px auto 0;display:block;opacity:.9}
 </style>
 </head>
 <body>
 <header class="hero">
-  <svg class="flake" viewBox="-110 -110 220 220" role="img" aria-label="Fiocco di neve Maro Gel">
-    <g transform="rotate(0)"><path class="core" style="--l:96" d="M0 0V-96"/><path class="b1" style="--l:60" d="M-22 -60 0 -38 22 -60"/><path class="b2" style="--l:40" d="M-14 -86 0 -72 14 -86"/><path class="b2" style="--l:30" d="M-9 -24 0 -16 9 -24"/></g><g transform="rotate(60)"><path class="core" style="--l:96" d="M0 0V-96"/><path class="b1" style="--l:60" d="M-22 -60 0 -38 22 -60"/><path class="b2" style="--l:40" d="M-14 -86 0 -72 14 -86"/><path class="b2" style="--l:30" d="M-9 -24 0 -16 9 -24"/></g><g transform="rotate(120)"><path class="core" style="--l:96" d="M0 0V-96"/><path class="b1" style="--l:60" d="M-22 -60 0 -38 22 -60"/><path class="b2" style="--l:40" d="M-14 -86 0 -72 14 -86"/><path class="b2" style="--l:30" d="M-9 -24 0 -16 9 -24"/></g><g transform="rotate(180)"><path class="core" style="--l:96" d="M0 0V-96"/><path class="b1" style="--l:60" d="M-22 -60 0 -38 22 -60"/><path class="b2" style="--l:40" d="M-14 -86 0 -72 14 -86"/><path class="b2" style="--l:30" d="M-9 -24 0 -16 9 -24"/></g><g transform="rotate(240)"><path class="core" style="--l:96" d="M0 0V-96"/><path class="b1" style="--l:60" d="M-22 -60 0 -38 22 -60"/><path class="b2" style="--l:40" d="M-14 -86 0 -72 14 -86"/><path class="b2" style="--l:30" d="M-9 -24 0 -16 9 -24"/></g><g transform="rotate(300)"><path class="core" style="--l:96" d="M0 0V-96"/><path class="b1" style="--l:60" d="M-22 -60 0 -38 22 -60"/><path class="b2" style="--l:40" d="M-14 -86 0 -72 14 -86"/><path class="b2" style="--l:30" d="M-9 -24 0 -16 9 -24"/></g>
-    <circle style="--l:63" r="10"/>
-  </svg>
-  <h1 class="word">Maro Gel<span>surgelati</span></h1>
-  <p class="tag rise">Pesce surgelato di prima scelta e prodotti artigianali a km 0, a Catanzaro.</p>
-  <a class="rating rise" href="https://www.google.com/maps/search/?api=1&query=Maro+Gel+Surgelati+Via+Tommaso+Campanella+68+Catanzaro" target="_blank" rel="noopener">
-    <span class="stars" aria-hidden="true">★★★★★</span><span><b>4,9</b> su Google</span>
-  </a>
+  <div class="flakes" aria-hidden="true">
+    <svg style="width:90px;left:-18px;top:40px;stroke-width:5" viewBox="-50 -50 100 100"><path d="M0-44V44M-38-22 38 22M-38 22 38-22M-10-32 0-22 10-32M-10 32 0 22 10 32"/></svg>
+    <svg style="width:56px;right:14px;top:22px;stroke-width:6" viewBox="-50 -50 100 100"><path d="M0-44V44M-38-22 38 22M-38 22 38-22"/></svg>
+    <svg style="width:120px;right:-34px;top:230px;stroke-width:4" viewBox="-50 -50 100 100"><path d="M0-44V44M-38-22 38 22M-38 22 38-22M-10-32 0-22 10-32M-10 32 0 22 10 32"/></svg>
+    <svg style="width:44px;left:28px;top:300px;stroke-width:7" viewBox="-50 -50 100 100"><path d="M0-44V44M-38-22 38 22M-38 22 38-22"/></svg>
+  </div>
+  <img class="logo" src="img/logo-bianco.svg" alt="Maro Gel">
+  <p class="claim">Surgelati di prima scelta, a due passi da casa</p>
+  <a class="badge" href="https://www.google.com/maps/search/?api=1&query=Maro+Gel+Surgelati+Via+Tommaso+Campanella+68+Catanzaro" target="_blank" rel="noopener"><span class="st" aria-hidden="true">★★★★★</span>4,9 su Google</a>
+  <svg class="wave" viewBox="0 0 400 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 80 10 140 70 220 44 S 340 10 400 34 V70 H0Z" fill="#fff"/></svg>
 </header>
 
-<main class="sheet">
-  <div class="wrap">
-    <section id="formBox">
-      <h2>Le offerte, prima degli altri</h2>
-      <p class="lead">Lascia nome e numero: ogni settimana ti scriviamo su WhatsApp le Super Offerte del negozio. Solo quelle, niente spam.</p>
+<main class="wrap">
+  <section class="card">
+    <span class="ribbon">Super Offerte ogni settimana</span>
+    <div id="formBox">
+      <h2>Le offerte arrivano prima a te</h2>
+      <p class="lead">Lascia nome e numero: ti scriviamo su WhatsApp le offerte del negozio, solo quelle.</p>
+      <div class="perks"><span>🐟 Pesce di prima scelta</span><span>🥖 Artigianale a km 0</span><span>🛍️ Prenoti e ritiri</span></div>
       <form id="f" novalidate>
         <input type="hidden" name="fonte" id="fonte" value="sito">
         <div class="field"><input id="nome" name="nome" autocomplete="given-name" placeholder=" " required><label for="nome">Il tuo nome</label></div>
@@ -122,44 +117,41 @@ footer .sig{margin-top:14px;font-family:var(--serif);font-style:italic;font-size
           Iscrivimi su WhatsApp
         </button>
       </form>
-    </section>
-
-    <section class="done" id="okBox" aria-live="polite">
-      <h2>Manca solo l'invio</h2>
+    </div>
+    <div class="done" id="okBox" aria-live="polite">
+      <div class="big">🎉</div>
+      <h2>Manca solo l'invio!</h2>
       <p class="lead">Si sta aprendo WhatsApp con il messaggio già scritto: premi invia e sei iscritto. Poi salva il nostro numero qui sotto, altrimenti le offerte non ti arrivano.</p>
       <a class="cta" id="waAgain" href="#">Apri WhatsApp</a>
-    </section>
-
-    <div class="save">
-      <p><strong>Salva il nostro numero</strong>Le offerte arrivano solo a chi ha Maro Gel in rubrica.</p>
-      <a class="btn2" href="marogel.vcf" id="vcf">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
-        Salva
-      </a>
     </div>
+  </section>
 
-    <ul class="links">
-      <li><a href="https://www.google.com/maps/search/?api=1&query=Maro+Gel+Surgelati+Via+Tommaso+Campanella+68+Catanzaro" target="_blank" rel="noopener">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-        <span class="t"><strong>Come arrivare</strong><span>Via Tommaso Campanella 68, di fronte a Villa Bianca</span></span><span class="chev">›</span></a></li>
-      <li><a href="https://www.instagram.com/marogel_surgelati" target="_blank" rel="noopener">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></span>
-        <span class="t"><strong>Instagram</strong><span>@marogel_surgelati</span></span><span class="chev">›</span></a></li>
-      <li><a href="https://www.facebook.com/share/1dgZAsS62d/" target="_blank" rel="noopener">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v7h4v-7h3l.5-4h-3.5V9c0-.6.4-1 1-1Z"/></svg></span>
-        <span class="t"><strong>Facebook</strong><span>Maro gel surgelati</span></span><span class="chev">›</span></a></li>
-      <li><a href="tel:+393891876406">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg></span>
-        <span class="t"><strong>Chiama il negozio</strong><span>389 187 6406</span></span><span class="chev">›</span></a></li>
-    </ul>
-
-    <footer>
-      I tuoi dati servono solo per mandarti le offerte di Maro Gel e non vengono ceduti a nessuno. Per cancellarti scrivi STOP su WhatsApp.
-      <div class="sig">Ti aspettiamo in negozio.</div>
-    </footer>
+  <div class="save">
+    <p><strong>Salva il nostro numero</strong>Le offerte arrivano solo a chi ha Maro Gel in rubrica.</p>
+    <a class="btn2" href="marogel.vcf" id="vcf">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>Salva</a>
   </div>
-</main>
 
+  <nav class="tiles" aria-label="Contatti">
+    <a class="tile t-map" href="https://www.google.com/maps/search/?api=1&query=Maro+Gel+Surgelati+Via+Tommaso+Campanella+68+Catanzaro" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      <div><strong>Come arrivare</strong><span>Via Tommaso Campanella 68, di fronte a Villa Bianca</span></div></a>
+    <a class="tile t-ig" href="https://www.instagram.com/marogel_surgelati" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
+      <div><strong>Instagram</strong><span>@marogel_surgelati</span></div></a>
+    <a class="tile t-fb" href="https://www.facebook.com/share/1dgZAsS62d/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v7h4v-7h3l.5-4h-3.5V9c0-.6.4-1 1-1Z"/></svg>
+      <div><strong>Facebook</strong><span>Maro gel surgelati</span></div></a>
+    <a class="tile t-tel" href="tel:+393891876406">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+      <div><strong>Chiama il negozio</strong><span>389 187 6406 · prenotazioni</span></div></a>
+  </nav>
+
+  <footer>
+    I tuoi dati servono solo per mandarti le offerte di Maro Gel e non vengono ceduti a nessuno. Per cancellarti scrivi STOP su WhatsApp.
+    <img src="img/logo-blu.svg" alt="">
+  </footer>
+</main>
 <script>
 (function(){
   var NUM='393891876406';
