@@ -132,6 +132,15 @@ ol.steps{margin:4px 0 0 18px;color:var(--muto);font-size:13.5px;line-height:1.6}
 .toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--abisso);color:#fff;padding:12px 18px;border-radius:14px;font-size:14px;font-weight:600;z-index:30;max-width:90vw;text-align:center}
 .lnk{background:none;border:0;color:var(--maro);font-weight:700;font-size:14px;padding:8px 0}
 .danger{color:var(--rosso)}
+.pick{display:flex;align-items:center;gap:12px;padding:12px 4px;border-top:1px solid var(--ghiaccio-2)}
+.pick:first-child{border-top:0}
+.pick input{width:24px;height:24px;flex:0 0 24px;accent-color:var(--maro)}
+.pick .t{flex:1;min-width:0}.pick .t b{display:block;font-size:15px;color:var(--abisso);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick .t span{display:block;font-size:12.5px;color:var(--muto)}
+.pick.dup{opacity:.5}
+.plist{background:#fff;border:1px solid var(--ghiaccio);border-radius:16px;padding:4px 12px;max-height:50vh;overflow:auto;margin:6px 0 14px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--abisso);line-height:1.45;margin:0 0 14px}
+.consent input{width:22px;height:22px;flex:0 0 22px;margin-top:1px;accent-color:var(--maro)}
 </style>
 </head>
 <body>
@@ -172,6 +181,15 @@ ol.steps{margin:4px 0 0 18px;color:var(--muto);font-size:13.5px;line-height:1.6}
 
     <!-- RUBRICA -->
     <section id="v-rubrica" class="hidden">
+      <div class="card">
+        <h3>Importa dalla rubrica del telefono</h3>
+        <p>Scegli i clienti che hai già in rubrica e mettili nella lista offerte. Spunta solo chi ti ha detto di sì a ricevere le offerte su WhatsApp.</p>
+        <div class="stack">
+          <button class="btn" id="impRub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>Scegli dalla rubrica</button>
+          <label class="btn lite" for="impFile" style="cursor:pointer">Oppure carica un file contatti (.vcf)</label>
+          <input id="impFile" type="file" accept=".vcf,text/vcard,text/x-vcard" hidden>
+        </div>
+      </div>
       <div class="card">
         <h3>1. Salva i nuovi in rubrica</h3>
         <p>Scarichi un unico file con tutti i clienti nuovi: aprilo sul telefono e scegli "Aggiungi tutti". I nomi finiscono in rubrica come "Nome - Cliente".</p>
@@ -356,6 +374,61 @@ function segnaTutti(lista,campo,msg){if(!lista.length)return;
 $('okRub').addEventListener('click',function(){segnaTutti(attivi().filter(function(c){return !c.in_rubrica}),'in_rubrica','Segnati come salvati in rubrica')});
 $('okLista').addEventListener('click',function(){segnaTutti(attivi().filter(function(c){return c.in_rubrica&&!c.in_lista}),'in_lista','Segnati come aggiunti alla lista')});
 
+
+/* IMPORTA DALLA RUBRICA */
+function normTel(t){t=String(t||'').replace(/[^\d+]/g,'');if(t.indexOf('+')===0)t=t.slice(1);else if(t.indexOf('00')===0)t=t.slice(2);
+  else if(/^3\d{8,9}$/.test(t))t='39'+t;else if(/^0\d{5,10}$/.test(t))t='39'+t;
+  t=t.replace(/\D/g,'');return t.length>=9&&t.length<=15?t:''}
+function scegliImport(raw){
+  var noti={};CL.forEach(function(c){noti[c.telefono]=1});
+  var visti={},rows=[];
+  raw.forEach(function(r){(r.tel||[]).forEach(function(x){var t=normTel(x);if(!t||visti[t])return;visti[t]=1;
+    rows.push({nome:(r.nome||'').trim()||('Cliente '+t.slice(-4)),tel:t,dup:!!noti[t]})})});
+  if(!rows.length){toast('Nessun numero valido trovato');return}
+  var nuovi=rows.filter(function(r){return !r.dup}).length;
+  apri('<h2>Importa '+nuovi+' contatti</h2><p class="sub">Togli la spunta a chi non vuole ricevere le offerte (parenti, fornitori…). I grigi sono già nella lista.</p>'+
+   '<div class="plist">'+rows.map(function(r,i){return '<label class="pick'+(r.dup?' dup':'')+'"><input type="checkbox" data-i="'+i+'"'+(r.dup?' disabled':(/^393/.test(r.tel)?' checked':''))+'><span class="t"><b>'+esc(r.nome)+'</b><span>'+fmtTel(r.tel)+(r.dup?' · già iscritto':(/^393/.test(r.tel)?'':' · fisso, niente WhatsApp'))+'</span></span></label>'}).join('')+'</div>'+
+   '<label class="consent"><input type="checkbox" id="impOk"><span>Confermo che questi clienti mi hanno dato il permesso di ricevere le offerte su WhatsApp.</span></label>'+
+   '<div class="stack"><button class="btn" id="impGo" disabled>Aggiungi alla lista offerte</button><button class="btn lite" id="impNo">Annulla</button></div>');
+  $('impOk').addEventListener('change',function(){$('impGo').disabled=!this.checked});
+  $('impNo').addEventListener('click',chiudi);
+  $('impGo').addEventListener('click',function(){
+    var sel=[].slice.call(document.querySelectorAll('.plist input:checked')).map(function(x){return rows[+x.dataset.i]});
+    if(!sel.length){toast('Nessun contatto selezionato');return}
+    var b=this,ok=0,gia=0,err=0,i=0;b.disabled=true;
+    (function next(){
+      if(i>=sel.length){
+        carica().then(function(){
+          var tels={};sel.forEach(function(r){tels[r.tel]=1});
+          var daSegnare=CL.filter(function(c){return tels[c.telefono]&&!c.in_rubrica});
+          return daSegnare.length?rpc('marogel_segna',{p_pin:PIN,p_ids:daSegnare.map(function(c){return c.id}),p_campo:'in_rubrica',p_valore:true}).then(function(){daSegnare.forEach(function(c){c.in_rubrica=true})}):null;
+        }).catch(function(){}).then(function(){chiudi();render();
+          toast(ok+' aggiunti'+(gia?' · '+gia+' già iscritti':'')+(err?' · '+err+' non riusciti':''))});
+        return}
+      var r=sel[i++];b.textContent='Aggiungo '+i+' di '+sel.length+'…';
+      rpc('marogel_cliente_aggiungi',{p_pin:PIN,p_nome:r.nome,p_tel:'+'+r.tel,p_nota:'Importato dalla rubrica'})
+      .then(function(x){if(x==='gia_iscritto')gia++;else ok++}).catch(function(){err++}).then(next);
+    })();
+  });
+}
+$('impRub').addEventListener('click',function(){
+  if(!(navigator.contacts&&navigator.contacts.select)){
+    toast('Questo telefono non lo permette: usa "carica un file contatti"');return}
+  navigator.contacts.select(['name','tel'],{multiple:true}).then(function(list){
+    if(!list||!list.length)return;
+    scegliImport(list.map(function(c){return{nome:(c.name&&c.name[0])||'',tel:c.tel||[]}}));
+  }).catch(function(e){toast('Rubrica non disponibile: '+e.message)});
+});
+function parseVcf(txt){
+  txt=txt.replace(/\r\n[ \t]/g,'').replace(/\n[ \t]/g,'');
+  return txt.split(/BEGIN:VCARD/i).slice(1).map(function(b){
+    var fn=(b.match(/^FN[^:]*:(.*)$/im)||[])[1]||'';
+    if(!fn){var n=(b.match(/^N[^:]*:(.*)$/im)||[])[1]||'';fn=n.split(';').reverse().join(' ').trim()}
+    var tel=[];b.replace(/^TEL[^:]*:(.*)$/gim,function(_,t){tel.push(t)});
+    return {nome:fn.replace(/\\,/g,',').trim(),tel:tel}});
+}
+$('impFile').addEventListener('change',function(){var f=this.files[0];if(!f)return;var rd=new FileReader();
+  rd.onload=function(){scegliImport(parseVcf(String(rd.result)))};rd.readAsText(f);this.value=''});
 /* OFFERTE: le prepara Teknexa (volantino + testo), Marianna le manda */
 function testoOfferta(o){var t=(o.testo||'').trim();
   if(o.scadenza&&t.indexOf('Valide fino')<0)t+='\n\n⏳ Valide fino al '+new Date(o.scadenza+'T12:00').toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});
