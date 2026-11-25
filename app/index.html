@@ -413,7 +413,14 @@ function scegliImport(raw){
 }
 $('impRub').addEventListener('click',function(){
   if(!(navigator.contacts&&navigator.contacts.select)){
-    toast('Questo telefono non lo permette: usa "carica un file contatti"');return}
+    var android=/Android/i.test(navigator.userAgent), chrome=/Chrome\//.test(navigator.userAgent)&&!/SamsungBrowser|; wv\)|EdgA|OPR|Firefox|FBAN|FBAV|Instagram|WhatsApp/i.test(navigator.userAgent);
+    var dove=/SamsungBrowser/i.test(navigator.userAgent)?'Samsung Internet':/; wv\)|WhatsApp|FBAN|FBAV|Instagram/i.test(navigator.userAgent)?'WhatsApp (browser interno)':'questo browser';
+    apri('<h2>Apri la pagina in Chrome</h2><p class="sub">'+(android&&!chrome?'Ora la pagina è aperta in <b>'+dove+'</b>, che non permette di leggere la rubrica. Su Android funziona solo con <b>Google Chrome</b>.':'Questo telefono non permette alla pagina di leggere la rubrica.')+'</p>'+
+     '<div class="stack">'+(android?'<a class="btn" href="intent://'+location.host+location.pathname+'#Intent;scheme=https;package=com.android.chrome;end">Apri in Chrome</a>':'')+
+     '<label class="btn lite" for="impFile" style="cursor:pointer">Carica invece un file contatti (.vcf)</label></div>'+
+     '<ol class="steps" style="margin-top:14px"><li>Per il file: apri l\'app <b>Contatti</b> → menu (tre puntini o ☰) → <b>Gestisci contatti</b> → <b>Importa/Esporta</b> → <b>Esporta</b> in un file .vcf.</li><li>Poi torna qui, tocca il pulsante qui sopra e scegli quel file.</li></ol>');
+    $('sh').querySelector('label[for=impFile]').addEventListener('click',chiudi);
+    return}
   navigator.contacts.select(['name','tel'],{multiple:true}).then(function(list){
     if(!list||!list.length)return;
     scegliImport(list.map(function(c){return{nome:(c.name&&c.name[0])||'',tel:c.tel||[]}}));
